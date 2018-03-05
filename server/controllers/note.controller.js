@@ -12,7 +12,6 @@ export function addNote(req, res) {
 
   if (!note || !note.task || !laneId) {
     res.status(400).end();
-    console.log(req.body);
   }
 
   const newNote = new Note({
@@ -32,5 +31,26 @@ export function addNote(req, res) {
       .then(() => {
         res.json(saved);
       });
+  });
+}
+
+export function editNote(req, res) {
+  Note.findOneAndUpdate({id: req.params.noteId} , {task: req.body.task}).exec((err , task) => {
+    if(err) {
+      res.status(500).send(err);
+    }
+    res.status(200).end();
+  })
+}
+
+export function deleteNote(req, res) {
+  Note.findOne({ id: req.params.noteId }).exec((err, note) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+
+    note.remove(() => {
+      res.status(200).end();
+    });
   });
 }
