@@ -18,6 +18,14 @@ function populateNotes(next) {
 
 laneSchema.pre('find', populateNotes);
 laneSchema.pre('findOne', populateNotes);
+laneSchema.pre('remove' , function(next) {
+	
+    const noteId = this.notes.map(notes => notes.id);
+    Note.remove({id: noteId},function() {
+        console.log(arguments);
+    }).exec();
+    next();
+})
 
 
 export default mongoose.model('Lane', laneSchema);
