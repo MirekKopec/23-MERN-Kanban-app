@@ -45,11 +45,12 @@ export function deleteLane(req, res) {
   });
 }
 
+
 export function editLane(req, res) {
-	Lane.findOneAndUpdate({id: req.params.laneId} , {name: req.body.name}).exec((err , name) => {
+	Lane.findOneAndUpdate({id: req.body.id} , {name: req.body.name}, {new: true}, (err , name) => {
     if(err) {
       res.status(500).send(err);
     }
-    res.status(200).end();
+    res.json(Object.assign({}, name, {name: req.body.name}));
   })
 }

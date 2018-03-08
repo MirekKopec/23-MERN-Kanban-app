@@ -26,6 +26,7 @@ export function createLane(lane) {
 export function createLaneRequest(lane) {
   return (dispatch) => {
     return callApi('lanes', 'post', lane).then(res => {
+      console.log(lane);
       dispatch(createLane(res));
     });
   };

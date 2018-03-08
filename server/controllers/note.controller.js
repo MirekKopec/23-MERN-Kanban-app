@@ -34,14 +34,17 @@ export function addNote(req, res) {
   });
 }
 
-export function editNote(req, res) {
-  Note.findOneAndUpdate({id: req.params.noteId} , {task: req.body.task}).exec((err , task) => {
+
+export function editNote(req, res)  {
+
+  Note.findOneAndUpdate({id: req.body.id}, {task: req.body.task}, {new: true}, (err, task) => {
     if(err) {
       res.status(500).send(err);
     }
-    res.status(200).end();
+    res.json(task);
   })
 }
+
 
 export function deleteNote(req, res) {
   Note.findOne({ id: req.params.noteId }).exec((err, note) => {

@@ -7,7 +7,7 @@ const router = new Router();
 router.route('/notes').post(NoteController.addNote);
 
 //Edit Note
-router.route('/notes/:noteId').put(NoteController.editNote);
+router.route('/notes/').put(NoteController.editNote);
 
 //delete Note
 router.route('/notes/:noteId').delete(NoteController.deleteNote);
