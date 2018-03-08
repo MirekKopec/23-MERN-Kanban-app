@@ -45,7 +45,11 @@ import serverConfig from './config';
 mongoose.Promise = global.Promise;
 
 // MongoDB Connection
-mongoose.connect(serverConfig.mongoURL, (error) => {
+const options = {
+  useMongoClient: true
+  }
+
+mongoose.connect(serverConfig.mongoURL, options, (error) => {
   if (error) {
     console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
     throw error;
