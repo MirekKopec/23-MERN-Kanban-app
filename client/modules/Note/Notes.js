@@ -3,11 +3,14 @@ import Note from './Note';
 import Edit from '../../components/Edit';
 import styles from './Notes.css';
 
-const Notes = ({ notes, laneId, editNote, updateNote, deleteNote }) => {
+const Notes = ({ notes, laneId, editNote, updateNote, deleteNote, moveWithinLane }) => {
     return (<ul className="notes">{notes.map((note) =>
         <Note
             id={note.id}
             key={note.id}
+            moveWithinLane={moveWithinLane}
+            laneId={laneId}            
+            _id={note._id}
             editing={note.editing}
         >
             <Edit
