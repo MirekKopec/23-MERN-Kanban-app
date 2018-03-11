@@ -12,18 +12,20 @@ class Note extends React.Component {
     this.props = props;
   }
   render() {
-    const {connectDragSource, isDragging, editing, children} = this.props;
+    const {connectDragSource, connectDropTarget, isDragging, editing, children} = this.props;
 
     // jeśli edytujemy to przepuszczamy komponent (uniemożliwiamy tym samym przeciąganie komponentu edytowanego)
     const dragSource = editing ? a => a : connectDragSource;
 
-    return dragSource(
-      <li className={styles.Note}
-        style={{
-        opacity: isDragging ? 0.3 : 1,
-        color: isDragging ? 'transparent' : 'white'
-      }} >{children}</li>
-    );
+    return dragSource(connectDropTarget(
+      <li className={styles.Note} 
+        style ={{
+          opacity: isDragging ? 0 : 1
+        }} 
+      >
+        {children}
+      </li>
+    ));
   }
 }
 
@@ -32,6 +34,8 @@ const noteSource = {
     return {
       id: props.id,
       laneId: props.laneId,
+      _id: props._id,
+
     };
   },
   isDragging(props, monitor) {
@@ -43,9 +47,10 @@ const noteTarget = {
   hover(targetProps, monitor) {
     const sourceProps = monitor.getItem();
 
-    if (targetProps.id !== sourceProps.id) {
+    if(targetProps.id !== sourceProps.id && targetProps.laneId === sourceProps.laneId  ) {
       targetProps.moveWithinLane(targetProps.laneId, targetProps.id, sourceProps.id);
-    }
+    } 
+
   }
 };
 

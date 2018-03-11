@@ -40,10 +40,9 @@ export function deleteLane(req, res) {
     }
     if(lane) {
       lane.remove(() => {
-        res.status(200).send();
+        res.status(200).send('lane deleted!');
       });
     } else {
-      console.log(req.body);
       res.status(500).send();
     }
   });

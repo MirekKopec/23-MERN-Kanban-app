@@ -52,8 +52,12 @@ export function deleteNote(req, res) {
       res.status(500).send(err);
     }
 
-    note.remove(() => {
-      res.status(200).end();
-    });
+    if(note) {
+      note.remove(() => {
+        res.status(200).send('note deleted!');
+      });
+    } else {
+      res.status(500).send();
+    }
   });
 }

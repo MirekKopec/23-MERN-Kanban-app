@@ -1,5 +1,6 @@
 import callApi from '../../util/apiCaller';
 
+
 // Export Constants
 export const CREATE_NOTE = 'CREATE_NOTE';
 export const UPDATE_NOTE = 'UPDATE_NOTE';
@@ -35,7 +36,7 @@ export function updateNote(note) {
 export function updateNoteRequest(note) {
   return (dispatch) => {
     return callApi('notes','put', {id: note.id, task: note.task} ).then(noteResp => {
-      console.log(note);
+      console.log(note, noteResp);
       dispatch(updateNote(noteResp));
     });
   }

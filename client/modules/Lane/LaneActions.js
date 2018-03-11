@@ -1,7 +1,7 @@
 import callApi from '../../util/apiCaller';
 import { lanes } from '../../util/schema';
 import { normalize } from 'normalizr';
-import { createNotesRequest, createNotes } from '../Note/NoteActions';
+import { createNotesRequest, createNotes, deleteNote } from '../Note/NoteActions';
 
 
 // Export Constants
@@ -58,20 +58,16 @@ export function deleteLane(laneId) {
 
 export function deleteLaneRequest(lane) {
   return(dispatch) => {
-    return callApi(`lanes/${lane.Id}`, 'delete').then(() => {
-      dispatch(deleteLane(lane.id));
-    })
+    return  callApi(`lanes/${lane.id}`, 'delete').then(() => { 
+      lane.notes.forEach( note => { 
+          dispatch(deleteNote( note, lane.id))
+        })
+        dispatch(deleteLane(lane.id));
+      })
   }
 }
-/*
-export function deleteLaneRequest(laneId) {
-  return(dispatch) => {
-    return callApi(`lanes/${laneId}`, 'delete').then(() => {
-      dispatch(deleteLane(laneId));
-    })
-  }
-}
-*/
+
+
 export function editLane(laneId) {
 	return {
       type: EDIT_LANE,
